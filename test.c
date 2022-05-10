@@ -59,6 +59,27 @@ int main(int argc, char** argv){
 // intarray copy = intarray_tri_1(tab);
 // free(tab);
 // free(copy);
-
+////////////////////////////////////////////
+ intarray tab = intarray_empty_create(6);
+ ext_intarray_debug(tab);
+ printf("\n");
+ ext_intarray_set(tab,4,25);
+ printf("\n");
+ ext_intarray_debug(tab);
+ printf("\n");
+ ext_intarray_set(tab,5,38);
+ printf("\n");
+ ext_intarray_debug(tab);
+ printf("\n");
+ ext_intarray_set(tab,8,40);
+ printf("\n");
+ ext_intarray_debug(tab);
+ for(int i=0;i<100;i++){
+  printf("\n");
+  intarray_add_end(tab,i);
+  printf("\n");
+  ext_intarray_debug(tab);
+ }
+ intarray_free(tab);
 
 }

@@ -29,3 +29,9 @@ intarray intarray_tri_1(intarray tab);
 void intarray_tri_aux(intarray tab);
 intarray intarray_copy(intarray tab);
 void intarray_free(intarray tab);
+void ext_intarray_set(intarray tab, int index, int value);
+void intarray_resise(intarray tab, int newalloc);
+// modifier intarray_add
+void ext_intarray_debug(intarray tab);
+
+

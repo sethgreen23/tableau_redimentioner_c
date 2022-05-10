@@ -38,13 +38,22 @@ void intarray_debug(intarray tab){
 }
 //add element at the end of the array
 void intarray_add_end(intarray tab,int value){
-  if(tab->len>=tab->alloc){
-    printf("intarray_add_end: We can't allow the adding of value %d array out of the size\n",value);
-    return;
-  }
-  tab->data[tab->len++]=value;
-  // printf("The value %d added successfully\n",value);
+  // if(tab->len>=tab->alloc){
+  //   printf("intarray_add_end: We can't allow the adding of value %d array out of the size\n",value);
+  //   return;
+  // }
+  // tab->data[tab->len++]=value;
+  ext_intarray_set(tab,tab->len,value);
+  
 }
+// void intarray_add_end(intarray tab,int value){
+//   if(tab->len>=tab->alloc){
+//     printf("intarray_add_end: We can't allow the adding of value %d array out of the size\n",value);
+//     return;
+//   }
+//   tab->data[tab->len++]=value;
+//   // printf("The value %d added successfully\n",value);
+// }
 
 //get element at index 
 int intarray_get(intarray tab,int index){
@@ -200,4 +209,47 @@ intarray intarray_copy(intarray tab){
 void intarray_free(intarray tab){
   free(tab->data);
   free(tab);
+}
+void ext_intarray_set(intarray tab, int index, int value){
+  // if the index negative it is not possible return 
+  if(index < 0){
+    printf("The index cant be negative !\n");
+    return;
+  }
+  // if the index < len then set normally return
+  if(index < tab->len){
+    tab->data[index]=value;
+    return;
+  }
+  //if the index >= alloc resize  newalloc=2*index +1
+  if(index >= tab->alloc)
+    intarray_resise(tab, 2*index+1);
+  // make the data between len and index to 0
+  for(int i=tab->len;i<index;i++){
+    tab->data[i]=0;
+  }
+  //the box with index take the value
+  tab->data[index]=value;
+  // if index >= len then len = index+1
+  if(index >= tab->len)
+    tab->len=index+1;
+
+}
+void intarray_resise(intarray tab, int newalloc){
+  // allo new array with size newalloc*2+1;
+  int* newdata = malloc(sizeof(int)*newalloc);
+  //assign the array values from the new to the old
+  for(int i=0;i<tab->len;i++)
+    newdata[i]=tab->data[i];
+  //all take the value of the new alloc
+  tab->alloc = newalloc;
+  //free the old data
+  free(tab->data);
+  // give the data the new table
+  tab->data = newdata;
+}
+// modifier intarray_add
+void ext_intarray_debug(intarray tab){
+  printf("The new alloc is %d and the len is %d.\n",tab->alloc, tab->len);
+  intarray_debug(tab);
 }
